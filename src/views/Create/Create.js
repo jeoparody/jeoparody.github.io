@@ -1,9 +1,14 @@
+import { VueEditor, Quill } from "vue2-editor";
+import { ImageDrop } from "quill-image-drop-module";
+
+Quill.register("modules/imageDrop", ImageDrop);
+
 export default {
   name: "Create",
-  components: {},
+  components: { VueEditor },
   data() {
     return {
-      categories: ["Test", "Test2"],
+      categories: [],
       addCategoryActive: false,
       addCategoryInput: "",
 
@@ -11,15 +16,49 @@ export default {
       addPrizeActive: false,
       addPrizeInput: 0,
 
+      activeCell: [0, 0],
+
       jeoparody: {
         title: "",
         categories: [],
-        prizes: {}
-      }
+        prizes: [100, 200, 300],
+      },
+
+      customToolbar: [["bold", "italic", "underline", "strike"], [{ color: [] }, { background: [] }], ["blockquote"], [{ list: "ordered" }, { list: "bullet" }], ["image", "video"], ["clean"]],
+      editorSettings: {
+        modules: {
+          imageDrop: true,
+        },
+      },
     };
   },
-
+  mounted() {
+    this.jeoparody = this.$store.getters.getCreateJeoparody;
+    this.activeCell = this.$store.getters.getActiveCell;
+  },
   methods: {
+    updateBoard() {
+      this.jeoparody.categories.forEach((category) => {
+        for (var i = 0; i < this.jeoparody.prizes.length; i++) {
+          if (typeof category.questions == "undefined") {
+            category.questions[i] = { question: "", answer: "" };
+          }
+          if (typeof category.questions[i] == "undefined") {
+            category.questions[i] = { question: "", answer: "" };
+          }
+        }
+      });
+
+      this.$store.commit("setCreateJeoparody", this.jeoparody);
+
+      console.log(this.jeoparody);
+    },
+    setCell(row, column) {
+      console.log(column, row);
+      this.$store.commit("setActiveCell", [column, row]);
+      this.activeCell = this.$store.getters.getActiveCell;
+      this.updateBoard();
+    },
     activateCategoryInput() {
       this.addCategoryActive = true;
       this.$nextTick(() => this.$refs.categoryInput.focus());
@@ -27,36 +66,49 @@ export default {
     activatePrizeInput() {
       this.addPrizeActive = true;
       this.$nextTick(() => this.$refs.prizeInput.focus());
+      this.$nextTick(() => this.$refs.prizeInput.select());
     },
     addCategory() {
-      if (!this.categories.includes(this.addCategoryInput)) {
-        this.categories.push(this.addCategoryInput);
-      }
+      this.jeoparody.categories.push({ name: this.addCategoryInput, questions: [] });
+      this.updateBoard();
       this.addCategoryActive = false;
       this.addCategoryInput = "";
+      this.setCell(0, 0);
+      this.updateBoard();
     },
     removeCategory(i) {
-      console.log(1);
-      var value = this.categories[i];
-      this.categories = this.categories.filter(function(item) {
+      var value = this.jeoparody.categories[i];
+      this.jeoparody.categories = this.jeoparody.categories.filter(function(item) {
         return item !== value;
       });
+
+      this.jeoparody.categories.splice(i, 1);
+      console.log(this.jeoparody);
+      this.updateBoard();
     },
     addPrize() {
-      if (!this.prizes.includes(this.addPrizeInput)) {
-        this.prizes.push(this.addPrizeInput);
+      if (!this.jeoparody.prizes.includes(this.addPrizeInput)) {
+        this.jeoparody.prizes.push(this.addPrizeInput);
       }
       this.addPrizeActive = false;
       this.addPrizeInput = 0;
+      this.updateBoard();
     },
     removePrize(i) {
-      var value = this.prizes[i];
-      this.prizes = this.prizes.filter(function(item) {
-        return item !== value;
-      });
+      if (this.jeoparody.prizes.length > 1) {
+        var value = this.jeoparody.prizes[i];
+        this.jeoparody.prizes = this.jeoparody.prizes.filter(function(item) {
+          return item !== value;
+        });
+        for (var j = 0; j < this.jeoparody.categories; j++) {
+          this.jeoparody.categories[j].questions.splice(i, 1);
+        }
+        this.updateBoard();
+      }
     },
-    saveFile(form) {
-      for (let i = 0; i < this.categories.length; i++) {
+    saveFile() {
+      console.log(this.jeoparody);
+      /*       for (let i = 0; i < this.categories.length; i++) {
         var newValue = { name: this.categories[i] };
         this.jeoparody.categories.push(newValue);
         this.jeoparody.categories[i].questions = [];
@@ -80,14 +132,36 @@ export default {
       console.log(3, this.jeoparody);
 
       let data = JSON.stringify(this.jeoparody);
-      this.download(this.jeoparody.title + ".json", data);
+      this.download(this.jeoparody.title + ".json", data); */
+
+      var element = document.createElement("a");
+      element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(JSON.stringify(this.jeoparody)));
+      element.setAttribute("download", this.jeoparody.title + ".json");
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    },
+    oepnFile() {
+      let file = this.$refs.fileInput.files[0];
+      let reader = new FileReader();
+      reader.readAsText(file, "JSON");
+      reader.onload = (evt) => {
+        this.$store.commit("setCreateJeoparody", JSON.parse(evt.target.result));
+      };
+      reader.onerror = (evt) => {
+        console.error(evt);
+      };
+      this.jeoparody = this.$store.getters.getCreateJeoparody;
+      console.log(this.jeoparody);
+      this.$router.go();
     },
     download(filename, text) {
       var element = document.createElement("a");
-      element.setAttribute(
-        "href",
-        "data:text/plain;charset=utf-8," + encodeURIComponent(text)
-      );
+      element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
       element.setAttribute("download", filename);
 
       element.style.display = "none";
@@ -107,6 +181,15 @@ export default {
       }
       console.log(data);
       this.saveFile(data);
-    }
-  }
+    },
+    reset() {
+      this.$store.commit("setActiveCell", [0, 0]);
+      this.$store.commit("setCreateJeoparody", {
+        title: "",
+        categories: [],
+        prizes: [100, 200, 300],
+      });
+      this.$router.go();
+    },
+  },
 };

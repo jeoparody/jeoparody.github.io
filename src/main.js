@@ -9,18 +9,26 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     jeoparody: {},
+    createJeoparody: {},
+    activeCell: [0, 0],
     options: {
-      turnEndsOnWrongAnswer: false
+      turnEndsOnWrongAnswer: false,
     },
     currentPlayer: 0,
     players: [],
     started: false,
-    grid: []
+    grid: [],
   },
   plugins: [createPersistedState()],
   mutations: {
     setJeoparody(state, json) {
       state.jeoparody = json;
+    },
+    setCreateJeoparody(state, json) {
+      state.createJeoparody = json;
+    },
+    setActiveCell(state, value) {
+      state.activeCell = value;
     },
     setOption(state, options) {
       state.options = options;
@@ -44,6 +52,14 @@ export const store = new Vuex.Store({
       console.log(state.currentPlayer);
     },
     addMoney(state, amount) {
+      /*       (function myLoop(i) {
+        setTimeout(function() {
+          state.players[state.currentPlayer].money += 1;
+          if (--i) {
+            myLoop(i);
+          }
+        }, 2);
+      })(amount); */
       state.players[state.currentPlayer].money += amount;
     },
     setGameState(state, bool) {
@@ -53,7 +69,7 @@ export const store = new Vuex.Store({
       state.grid = array;
     },
     reset(state) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         player.money = 0;
       });
       state.started = false;
@@ -63,7 +79,7 @@ export const store = new Vuex.Store({
         }
       }
       state.jeoparody = {};
-    }
+    },
   },
   actions: {},
   modules: {},
@@ -71,11 +87,26 @@ export const store = new Vuex.Store({
     getJeoparody(state) {
       return state.jeoparody;
     },
+    getCreateJeoparody(state) {
+      return state.createJeoparody;
+    },
+    getActiveCell(state) {
+      return state.activeCell;
+    },
     getOptions(state) {
       return state.options;
     },
     getCurrentPlayer(state) {
       return state.currentPlayer;
+    },
+    getLeadingPlayer(state) {
+      var lead = state.players[0];
+      state.players.forEach((player) => {
+        if (player.money > lead.money) {
+          lead = player;
+        }
+      });
+      return lead;
     },
     getPlayers(state) {
       return state.players;
@@ -85,8 +116,8 @@ export const store = new Vuex.Store({
     },
     getGrid(state) {
       return state.grid;
-    }
-  }
+    },
+  },
 });
 
 Vue.config.productionTip = false;
@@ -94,5 +125,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

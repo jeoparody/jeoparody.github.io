@@ -72,7 +72,7 @@
           width: 50px;
           height: 50px;
           border: none;
-          background-color: #34d64a;
+          background-color: $interaction-green;
           border-radius: 0 0 5px 0;
           float: right;
           padding: 0;
@@ -154,7 +154,7 @@
         border-radius: 10px;
         font-size: 20px;
         margin: auto;
-        background-color: #34d64a;
+        background-color: $interaction-green;
         border: none;
         color: white;
         outline: none;
@@ -221,6 +221,15 @@ table {
     flex: 1;
     background-color: #ced7e9;
     cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+
+    .crown {
+      position: absolute;
+      height: 50px;
+      right: 10px;
+      top: 5px;
+    }
 
     h1 {
       margin: 10px 0;
@@ -248,12 +257,12 @@ table {
     }
 
     .add {
-      background-color: #21b935;
+      background-color: $interaction-green;
       border-radius: 10px 0 0 10px;
     }
 
     .subtract {
-      background-color: #b92121;
+      background-color: $interaction-red;
       border-radius: 0 10px 10px 0;
       outline: none;
     }
@@ -261,6 +270,7 @@ table {
 
   .active {
     background-color: rgb(252, 249, 87);
+    transform: scale(1.1);
   }
 }
 

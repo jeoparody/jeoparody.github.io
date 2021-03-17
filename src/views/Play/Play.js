@@ -9,21 +9,21 @@ export default {
     return {
       img: {
         check: "@/assets/check.png",
-        wrong: "@/assets/wrong.png"
+        wrong: "@/assets/wrong.png",
       },
       json: {},
       players: [
         { name: "Julain", money: 0 },
         { name: "Mias", money: 0 },
         { name: "Joël", money: 0 },
-        { name: "Miro", money: 0 }
+        { name: "Miro", money: 0 },
       ],
       currentPlayer: 0,
       addPlayerActive: false,
       addPlayerInput: "",
       started: false,
       grid: [],
-      options: {}
+      options: {},
     };
   },
   mounted() {
@@ -40,7 +40,7 @@ export default {
     },
     getCurrentPlayer: function() {
       return this.$store.getters.getCurrentPlayer;
-    }
+    },
   },
   methods: {
     activatePlayerInput() {
@@ -51,10 +51,10 @@ export default {
       let file = this.$refs.fileInput.files[0];
       let reader = new FileReader();
       reader.readAsText(file, "JSON");
-      reader.onload = evt => {
+      reader.onload = (evt) => {
         this.$store.commit("setJeoparody", JSON.parse(evt.target.result));
       };
-      reader.onerror = evt => {
+      reader.onerror = (evt) => {
         console.error(evt);
       };
       this.json = this.$store.getters.getJeoparody;
@@ -108,8 +108,7 @@ export default {
     changeOption(option) {
       switch (option) {
         case "turnEndsOnWrongAnswer":
-          this.options.turnEndsOnWrongAnswer = !this.options
-            .turnEndsOnWrongAnswer;
+          this.options.turnEndsOnWrongAnswer = !this.options.turnEndsOnWrongAnswer;
           break;
       }
 
@@ -119,6 +118,6 @@ export default {
       this.$store.commit("reset");
       this.started = this.$store.getters.getGameState;
       this.$router.go();
-    }
-  }
+    },
+  },
 };

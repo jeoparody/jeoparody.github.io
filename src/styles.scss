@@ -1,0 +1,47 @@
+// COLORS
+$primary: #1f316b;
+$secomdary: #181c4d;
+
+$interaction-green: #60bd56;
+$interaction-green-dark: #519e48;
+$interaction-green-dull: #79b473;
+$interaction-red: #ab2535;
+$interaction-red-dark: #881e2a;
+$interaction-red-dull: #90323d;
+$interaction-gray: #858491;
+$interaction-gray-dark: #737280;
+
+//--------------------------------------------------------------------------
+// FONTS
+//--------------------------------------------------------------------------
+
+// Ranchers
+@font-face {
+  font-family: "Ranchers";
+  src: local("Ranchers"), url(~@/assets/fonts/Ranchers-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "NotoSansJP";
+  src: url(~@/assets/fonts/NotoSansJP-Regular.otf) format("truetype");
+  font-weight: normal;
+}
+
+// NotoSansJP
+@font-face {
+  font-family: "NotoSansJP";
+  src: url(~@/assets/fonts/NotoSansJP-Medium.otf) format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "NotoSansJP";
+  src: url(~@/assets/fonts/NotoSansJP-Bold.otf) format("truetype");
+  font-weight: bolder;
+}
+
+@font-face {
+  font-family: "NotoSansJP";
+  src: url(~@/assets/fonts/NotoSansJP-Light.otf) format("truetype");
+  font-weight: lighter;
+}

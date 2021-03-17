@@ -18,14 +18,18 @@
 
         <div class="modal__body">
           <slot name="body" />
-          <p v-html="data.questions[row].question"></p>
-          <button v-if="!revealed" @click="revealed = true" class="reveal">
-            Reveal Answer
-          </button>
-          <p v-if="revealed" class="answer">{{ data.questions[row].answer }}</p>
+          <div class="content">
+            <p v-html="data.questions[row].question"></p>
+            <img v-if="data.questions[row].image" :src="data.questions[row].image" />
+            <iframe v-if="data.questions[row].video" width="800" height="450" allowfullscreen :src="getEmbededLink()"></iframe>
+          </div>
         </div>
 
         <div class="modal__footer">
+          <button v-if="!revealed" @click="revealed = true" class="reveal">
+            Reveal Answer
+          </button>
+          <p v-if="revealed" class="answer" v-html="data.questions[row].answer"></p>
           <div class="result" v-if="revealed">
             <p>Was the answer correct?</p>
             <button class="right" @click="rightAnswer()">
@@ -52,10 +56,14 @@ export default {
       index: 0,
       row: 0,
       prize: 0,
-      revealed: false
+      revealed: false,
     };
   },
   methods: {
+    getEmbededLink() {
+      var split = this.data.questions[this.row].video.split("=");
+      return "https://www.youtube.com/embed/" + split[1] + "?modestbranding=1";
+    },
     closeModal() {
       this.show = false;
       this.revealed = false;
@@ -63,6 +71,9 @@ export default {
     },
     rightAnswer() {
       this.$store.commit("addMoney", this.prize);
+      if (!this.$store.getters.getOptions.turnEndsOnWrongAnswer) {
+        this.$store.commit("nextPlayer");
+      }
       this.show = false;
       this.revealed = false;
       let grid = this.$store.getters.getGrid;
@@ -86,8 +97,8 @@ export default {
       this.prize = prize;
       this.show = true;
       document.querySelector("body").classList.add("overflow-hidden");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -101,6 +112,7 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 9;
+
   &__backdrop {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
@@ -141,26 +153,54 @@ export default {
     text-align: center;
     justify-content: space-between;
     text-align: center;
+
+    h1 {
+      position: absolute;
+      font-size: 35px;
+      margin: -20px;
+      padding: 20px;
+      border-bottom-right-radius: 20px;
+      background-color: #2e448b;
+    }
   }
   &__body {
     padding: 10px 20px 10px;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    flex-grow: 1;
     font-size: 35px;
 
-    .answer {
-      background-color: #2e448b;
-      border-radius: 20px;
-
-      width: 50%;
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin: auto;
-      padding: 40px;
+      max-width: 100%;
+
+      /deep/ img {
+        max-width: 80%;
+        max-height: 75%;
+      }
+
+      /deep/ iframe {
+        width: 800;
+        height: 450;
+      }
     }
   }
   &__footer {
     padding: 10px 20px 20px;
+    .answer {
+      background-color: #2e448b;
+      border-radius: 20px;
+      font-size: 30px;
+
+      width: 50%;
+      margin: auto;
+      padding: 30px;
+    }
   }
   .reveal {
     width: 250px;
@@ -176,7 +216,8 @@ export default {
   }
   .result {
     p {
-      font-size: 30px;
+      font-size: 24px;
+      margin-bottom: 0px;
     }
     .right,
     .wrong {

@@ -1,24 +1,52 @@
 .home {
-  .buttons {
-    width: 15%;
-    margin: auto;
+  position: absolute;
+  background-color: $primary;
+  width: 700px;
+  border-radius: 20px;
+  padding: 60px 60px 30px 60px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
+  h1 {
+    font-family: "Ranchers", Helvetica, Arial;
+    letter-spacing: 3px;
+    font-size: 60px;
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 60px 0 10px 0;
+  }
+
+  .buttons {
     button {
       width: 100%;
-      height: 60px;
-      background-color: #0000ff;
+      padding: 20px 0;
+      background-color: $interaction-gray;
       border: none;
       border-radius: 15px;
-      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
       color: #ffffff;
-      font-size: 30px;
+      font-size: 28px;
       cursor: pointer;
+      outline: none;
+      transition: 0.1s;
+
+      &:hover,
+      &:focus {
+        background-color: $interaction-gray-dark;
+        transform: scale(1.05);
+      }
     }
     .play {
-      height: 100px;
-      background-color: #ff9c1c;
+      background-color: $interaction-green;
       margin-bottom: 30px;
-      font-size: 50px;
+      font-size: 54px;
+
+      &:hover,
+      &:focus {
+        background-color: $interaction-green-dark;
+      }
     }
   }
 }

@@ -11,14 +11,15 @@
 <style lang="scss">
 body {
   margin: 0;
-  background-color: #0e0039;
+  background-color: #181c4d;
   height: 100%;
+  background-image: url(~@/assets/carbon-fibre-v2.png);
 }
 html {
   height: 100%;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "NotoSansJP", Helvetica, Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
