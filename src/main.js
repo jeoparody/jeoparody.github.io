@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     activeCell: [0, 0],
     options: {
       turnEndsOnWrongAnswer: false,
+      underdogAdjustment: true,
     },
     currentPlayer: 0,
     players: [],
@@ -30,14 +31,21 @@ export const store = new Vuex.Store({
     setActiveCell(state, value) {
       state.activeCell = value;
     },
-    setOption(state, options) {
-      state.options = options;
+    setOptions(state, option) {
+      switch (option) {
+        case "turnEndsOnWrongAnswer":
+          state.options.turnEndsOnWrongAnswer = !state.options.turnEndsOnWrongAnswer;
+          break;
+        case "underdogAdjustment":
+          state.options.underdogAdjustment = !state.options.underdogAdjustment;
+          break;
+      }
     },
     setCurrentPlayer(state, index) {
       state.currentPlayer = index;
     },
     addPlayer(state, player) {
-      state.players.push({ name: player, money: 0 });
+      state.players.push({ name: player, money: 0, answers: 0 });
     },
     removePlayer(state, player) {
       state.players = state.players.filter(function(item) {
@@ -45,6 +53,7 @@ export const store = new Vuex.Store({
       });
     },
     nextPlayer(state) {
+      state.players[state.currentPlayer].answers += 1;
       state.currentPlayer = state.currentPlayer + 1;
       if (state.currentPlayer >= state.players.length) {
         state.currentPlayer = 0;
@@ -71,6 +80,7 @@ export const store = new Vuex.Store({
     reset(state) {
       state.players.forEach((player) => {
         player.money = 0;
+        player.answers = 0;
       });
       state.started = false;
       for (let i = 0; i < state.grid.length; ++i) {

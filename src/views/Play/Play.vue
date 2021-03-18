@@ -30,12 +30,11 @@
           >
           <input class="file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="previewFiles()" />
           <div class="options">
-            <p>
-              Turn only ends after wrong answer<img v-if="options.turnEndsOnWrongAnswer" src="@/assets/check.png" @click="changeOption('turnEndsOnWrongAnswer')" /><img
-                v-else
-                src="@/assets/wrong.png"
-                @click="changeOption('turnEndsOnWrongAnswer')"
-              />
+            <p @click="$store.commit('setOptions', 'turnEndsOnWrongAnswer')">
+              Turn only ends after wrong answer<img v-if="$store.getters.getOptions.turnEndsOnWrongAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
+            </p>
+            <p @click="$store.commit('setOptions', 'underdogAdjustment')">
+              Underdog Adjustment<img v-if="$store.getters.getOptions.underdogAdjustment" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
             </p>
             <p class="wip">Daily Double<img src="@/assets/check.png" /></p>
             <p class="wip">Buzzer Mode<img src="@/assets/check.png" /></p>
@@ -61,7 +60,7 @@
       </table>
 
       <div class="player-box">
-        <div v-for="(player, index) in players" :key="player.name" v-bind:class="[getCurrentPlayer == index ? 'active' : '', 'player']" @click="changePlayer(index)">
+        <div v-for="(player, index) in $store.getters.getPlayers" :key="player.name" v-bind:class="[getCurrentPlayer == index ? 'active' : '', 'player']" @click="changePlayer(index)">
           <h1>{{ player.name }}</h1>
           <img v-if="$store.getters.getLeadingPlayer.name == player.name" src="@/assets/crown.png" class="crown" />
           <button class="add" @click="player.money += 100">+</button>
@@ -71,11 +70,17 @@
         </div>
       </div>
       <button class="quit" @click="quit()">Quit</button>
+      <button class="view-results" @click="$refs.results.openModal()" v-if="finished()">View Results</button>
       <modal ref="modalName">
         <template v-slot:footer>
           <div></div>
         </template>
       </modal>
+      <results ref="results">
+        <template v-slot:footer>
+          <div></div>
+        </template>
+      </results>
     </div>
   </div>
 </template>

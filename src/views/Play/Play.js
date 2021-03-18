@@ -1,9 +1,10 @@
 // import jsonData from "./data.json";
 import Modal from "@/components/Modal/Modal";
+import Results from "@/components/Results/Results.vue";
 
 export default {
   name: "Play",
-  components: { Modal },
+  components: { Modal, Results },
 
   data() {
     return {
@@ -82,15 +83,17 @@ export default {
       this.currentPlayer = this.$store.getters.getCurrentPlayer;
       this.started = true;
       this.$store.commit("setGameState", true);
+      let grid = [];
       for (var i = this.json.categories.length - 1; i >= 0; i--) {
         let temp = [];
 
         for (var j = this.json.prizes.length - 1; j >= 0; j--) {
           temp.push(false);
         }
-        this.grid.push(temp);
+        grid.push(temp);
       }
-      this.$store.commit("setGrid", this.grid);
+      this.$store.commit("setGrid", grid);
+      this.grid = this.$store.getters.getGrid;
       console.log(this.json);
     },
     shufflePlayers() {
@@ -105,19 +108,13 @@ export default {
       this.$store.commit("setCurrentPlayer", index);
       this.currentPlayer = this.$store.getters.getCurrentPlayer;
     },
-    changeOption(option) {
-      switch (option) {
-        case "turnEndsOnWrongAnswer":
-          this.options.turnEndsOnWrongAnswer = !this.options.turnEndsOnWrongAnswer;
-          break;
-      }
-
-      this.$store.commit("setOption", this.options);
-    },
     quit() {
       this.$store.commit("reset");
       this.started = this.$store.getters.getGameState;
       this.$router.go();
+    },
+    finished() {
+      return this.$store.getters.getGrid.every((row) => row.every((cell) => cell == true));
     },
   },
 };

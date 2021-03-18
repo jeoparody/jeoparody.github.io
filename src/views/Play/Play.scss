@@ -289,6 +289,21 @@ table {
   cursor: pointer;
 }
 
+.view-results {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  height: 60px;
+  width: 220px;
+  font-size: 30px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: $interaction-green;
+  color: white;
+  cursor: pointer;
+}
+
 .board {
   height: 100%;
 }
