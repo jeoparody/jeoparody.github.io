@@ -200,6 +200,16 @@ export default {
       width: 50%;
       margin: auto;
       padding: 30px;
+
+      /deep/ img {
+        max-width: 80%;
+        max-height: 50%;
+      }
+
+      /deep/ iframe {
+        width: 800;
+        height: 450;
+      }
     }
   }
   .reveal {
