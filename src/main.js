@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
     createJeoparody: {},
     activeCell: [0, 0],
     options: {
+      everybodyCanAnswer: false,
       turnEndsOnWrongAnswer: false,
       underdogAdjustment: true,
     },
@@ -33,12 +34,22 @@ export const store = new Vuex.Store({
     },
     setOptions(state, option) {
       switch (option) {
+        case "everybodyCanAnswer":
+          state.options.everybodyCanAnswer = !state.options.everybodyCanAnswer;
+          break;
         case "turnEndsOnWrongAnswer":
           state.options.turnEndsOnWrongAnswer = !state.options.turnEndsOnWrongAnswer;
           break;
         case "underdogAdjustment":
           state.options.underdogAdjustment = !state.options.underdogAdjustment;
           break;
+      }
+      if (state.options.everybodyCanAnswer) {
+        state.options.turnEndsOnWrongAnswer = false;
+        state.options.underdogAdjustment = false;
+      }
+      if (state.options.turnEndsOnWrongAnswer) {
+        state.options.underdogAdjustment = false;
       }
     },
     setCurrentPlayer(state, index) {

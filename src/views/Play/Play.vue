@@ -25,21 +25,22 @@
         </div>
         <div class="settings">
           <h2>Settings</h2>
-          <label for="file" class="file-label"
+          <label for="file" class="upload-file-label"
             ><span v-if="Object.keys(json).length !== 0">"{{ json.title }}" uploaded</span><span v-if="Object.keys(json).length === 0">Upload your jeoparody file</span></label
           >
-          <input class="file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="previewFiles()" />
+          <input class="upload-file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="previewFiles()" />
           <div class="options">
-            <p @click="$store.commit('setOptions', 'turnEndsOnWrongAnswer')">
+            <p @click="$store.commit('setOptions', 'everybodyCanAnswer')">
+              Allow everybody to answer (W.I.P)<img v-if="$store.getters.getOptions.everybodyCanAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
+            </p>
+            <p @click="$store.commit('setOptions', 'turnEndsOnWrongAnswer')" v-if="!$store.getters.getOptions.everybodyCanAnswer">
               Turn only ends after wrong answer<img v-if="$store.getters.getOptions.turnEndsOnWrongAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
             </p>
-            <p @click="$store.commit('setOptions', 'underdogAdjustment')">
+            <p @click="$store.commit('setOptions', 'underdogAdjustment')" v-if="!$store.getters.getOptions.turnEndsOnWrongAnswer && !$store.getters.getOptions.everybodyCanAnswer">
               Underdog Adjustment<img v-if="$store.getters.getOptions.underdogAdjustment" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
             </p>
-            <p class="wip">Daily Double<img src="@/assets/check.png" /></p>
-            <p class="wip">Buzzer Mode<img src="@/assets/check.png" /></p>
           </div>
-          <button @click="start()" :disabled="Object.keys(json).length === 0" class="start-button">
+          <button @click="start()" :disabled="Object.keys(json).length === 0 || $store.getters.getPlayers.length == 0" class="start-button">
             START
           </button>
         </div>

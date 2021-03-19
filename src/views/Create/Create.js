@@ -35,6 +35,16 @@ export default {
   mounted() {
     this.jeoparody = this.$store.getters.getCreateJeoparody;
     this.activeCell = this.$store.getters.getActiveCell;
+    console.log(this.jeoparody);
+    if (!this.jeoparody.categories) {
+      this.jeoparody = {
+        title: "",
+        categories: [],
+        prizes: [100, 200, 300],
+      };
+      this.$store.commit("setCreateJeoparody", this.jeoparody);
+    }
+    console.log(this.jeoparody);
   },
   methods: {
     updateBoard() {
@@ -50,7 +60,6 @@ export default {
       });
 
       this.$store.commit("setCreateJeoparody", this.jeoparody);
-
       console.log(this.jeoparody);
     },
     setCell(row, column) {
@@ -75,6 +84,9 @@ export default {
       this.addCategoryInput = "";
       this.setCell(0, 0);
       this.updateBoard();
+      if (this.$store.getters.getCreateJeoparody.categories.length == 1) {
+        this.$router.go();
+      }
     },
     removeCategory(i) {
       var value = this.jeoparody.categories[i];
@@ -183,13 +195,17 @@ export default {
       this.saveFile(data);
     },
     reset() {
-      this.$store.commit("setActiveCell", [0, 0]);
-      this.$store.commit("setCreateJeoparody", {
-        title: "",
-        categories: [],
-        prizes: [100, 200, 300],
-      });
-      this.$router.go();
+      var answer = window.confirm("You will loose your currently opened Jeoparody. Make sure that you download it, if you still need it. Do you want to reset?");
+      if (answer) {
+        this.$store.commit("setActiveCell", [0, 0]);
+        this.$store.commit("setCreateJeoparody", {
+          title: "",
+          categories: [],
+          prizes: [100, 200, 300],
+        });
+        this.jeoparody = this.$store.getters.getCreateJeoparody;
+        this.$router.go();
+      }
     },
   },
 };

@@ -368,9 +368,13 @@
       border-radius: 5px;
     }
   }
-
+  .prevent-download {
+    float: right;
+    line-height: 50px;
+    margin: 0;
+    margin-right: 20px;
+  }
   .download {
-    position: fixed;
     width: 150px;
     height: 50px;
     border-radius: 10px;
@@ -382,11 +386,25 @@
     cursor: pointer;
     right: 60px;
     bottom: 60px;
+    float: right;
 
     &:disabled {
-      background-color: #888888;
+      opacity: 0.5;
       cursor: not-allowed;
     }
+  }
+  .reset {
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: #a3a3a3;
+    border: none;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    right: 60px;
+    bottom: 60px;
   }
 }
 @media only screen and (max-width: 800px) {
@@ -412,6 +430,7 @@
 .editor-area {
   display: flex;
   width: 100%;
+  margin-bottom: 40px;
   .question,
   .answer {
     width: calc(50% - 20px);
@@ -466,7 +485,8 @@
 }
 
 .file-label {
-  position: fixed;
+  float: left;
+  margin-right: 20px;
   text-align: center;
   width: 260px;
   line-height: 50px;

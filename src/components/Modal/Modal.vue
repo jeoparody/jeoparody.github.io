@@ -30,7 +30,7 @@
             Reveal Answer
           </button>
           <p v-if="revealed" class="answer" v-html="data.questions[row].answer"></p>
-          <div class="result" v-if="revealed">
+          <div class="result" v-if="revealed && !reopened">
             <p>Was the answer correct?</p>
             <button class="right" @click="rightAnswer()">
               <img src="@/assets/check.png" />
@@ -57,6 +57,7 @@ export default {
       row: 0,
       prize: 0,
       revealed: false,
+      reopened: false,
     };
   },
   methods: {
@@ -67,6 +68,7 @@ export default {
     closeModal() {
       this.show = false;
       this.revealed = false;
+      this.reopened = false;
       document.querySelector("body").classList.remove("overflow-hidden");
     },
     rightAnswer() {
@@ -96,6 +98,10 @@ export default {
       this.row = row;
       this.prize = prize;
       this.show = true;
+      if (this.$store.getters.getGrid[this.index][this.row]) {
+        this.revealed = true;
+        this.reopened = true;
+      }
       document.querySelector("body").classList.add("overflow-hidden");
     },
   },
@@ -240,7 +246,6 @@ export default {
       color: white;
       outline: none;
       padding: 0;
-
       cursor: pointer;
 
       img {

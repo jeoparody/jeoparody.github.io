@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: "jeoparody.github.io",
+  publicPath: "/",
   css: {
     loaderOptions: {
       sass: {

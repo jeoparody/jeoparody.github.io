@@ -74,7 +74,7 @@
             :key="category + index"
             v-bind:class="[
               { active: activeCell[0] == index && activeCell[1] == row },
-              { completed: jeoparody.categories[index].questions[row].qustion != '' && jeoparody.categories[index].questions[row].answer != '' },
+              { filled: jeoparody.categories[index].questions[row].qustion != '' && jeoparody.categories[index].questions[row].answer != '' },
               { even: row % 2 !== 0 },
             ]"
             @click="setCell(row, index)"
@@ -111,6 +111,7 @@
       </div>
     </div>
     <button class="download" @click="saveFile()" :disabled="jeoparody.title == ''">Download</button>
+    <p v-if="jeoparody.title == ''" class="prevent-download">Your Jeoparody needs a title</p>
     <label for="file" class="file-label">Edit an existing Jeoparody</label>
     <input class="file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="oepnFile()" />
     <button class="reset" @click="reset()">Reset</button>
