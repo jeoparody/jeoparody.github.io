@@ -50,3 +50,22 @@
     }
   }
 }
+
+.patch {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+
+  .link {
+    display: none;
+  }
+  &:hover .patch-number {
+    display: none;
+  }
+  &:hover .link {
+    display: inline;
+    color: $interaction-green;
+    font-weight: bold;
+  }
+}

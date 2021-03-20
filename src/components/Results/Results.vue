@@ -31,7 +31,7 @@
                 >
               </li>
             </ol>
-            <button class="quit-game" @click="$router.push('/')">Quit</button>
+            <button class="quit-game" @click="quit()">Quit</button>
           </div>
         </div>
 
@@ -83,7 +83,7 @@ export default {
         }
       });
       this.playersFinal.sort(function(a, b) {
-        return a.money - b.money;
+        return a.moneyFinal - b.moneyFinal;
       });
       this.playersFinal.reverse();
       console.log(this.playersFinal);
@@ -96,6 +96,10 @@ export default {
         return Math.round((player.money / player.answers) * this.maxQuestionsPerPlayer - player.money);
       }
       return 0;
+    },
+    quit() {
+      this.$store.commit("reset");
+      this.$router.push("/");
     },
   },
 };

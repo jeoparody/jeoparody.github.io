@@ -37,7 +37,7 @@
               Turn only ends after wrong answer<img v-if="$store.getters.getOptions.turnEndsOnWrongAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
             </p>
             <p @click="$store.commit('setOptions', 'underdogAdjustment')" v-if="!$store.getters.getOptions.turnEndsOnWrongAnswer && !$store.getters.getOptions.everybodyCanAnswer">
-              Underdog Adjustment<img v-if="$store.getters.getOptions.underdogAdjustment" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
+              Underdog Bonus<img v-if="$store.getters.getOptions.underdogAdjustment" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
             </p>
           </div>
           <button @click="start()" :disabled="Object.keys(json).length === 0 || $store.getters.getPlayers.length == 0" class="start-button">
