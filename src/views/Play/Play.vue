@@ -6,12 +6,12 @@
         <div class="players">
           <h2>Players</h2>
           <div class="player-list">
-            <p v-for="(player, index) in players" :key="player + index" class="player">
-              {{ player.name }}
+            <div v-for="(player, index) in players" :key="player + index" class="player">
+              <input type="text" v-model="player.name" @keyup="$store.commit('setPlayers', players)" />
               <button @click="removePlayer(index)">
                 <img src="@/assets/wrong.png" />
               </button>
-            </p>
+            </div>
           </div>
           <div class="add-player" v-if="addPlayerActive">
             <input ref="playerInput" type="text" v-model="addPlayerInput" v-on:keyup.enter="addPlayer()" />
@@ -25,19 +25,33 @@
         </div>
         <div class="settings">
           <h2>Settings</h2>
+          <!-- <button @click="refreshCategories()">Generate</button> !-->
           <label for="file" class="upload-file-label"
             ><span v-if="Object.keys(json).length !== 0">"{{ json.title }}" uploaded</span><span v-if="Object.keys(json).length === 0">Upload your jeoparody file</span></label
           >
           <input class="upload-file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="previewFiles()" />
           <div class="options">
-            <p @click="$store.commit('setOptions', 'everybodyCanAnswer')">
+            <p @click="$store.commit('setOptions', 'everybodyCanAnswer')" class="wip">
               Allow everybody to answer (W.I.P)<img v-if="$store.getters.getOptions.everybodyCanAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
+              <br />
+              <span class="description">
+                Not yet implemented, doesn't affect gameplay
+              </span>
             </p>
             <p @click="$store.commit('setOptions', 'turnEndsOnWrongAnswer')" v-if="!$store.getters.getOptions.everybodyCanAnswer">
               Turn only ends after wrong answer<img v-if="$store.getters.getOptions.turnEndsOnWrongAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
+              <br />
+              <span class="description">
+                If this option is enabled, a player may continue his turn, until he gets a question wrong.
+              </span>
             </p>
             <p @click="$store.commit('setOptions', 'underdogAdjustment')" v-if="!$store.getters.getOptions.turnEndsOnWrongAnswer && !$store.getters.getOptions.everybodyCanAnswer">
               Underdog Bonus<img v-if="$store.getters.getOptions.underdogAdjustment" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
+              <br />
+              <span class="description"
+                >If there aren't the same amount of questions for each player, the players that got to answer one question less get a small bonus at the end. This bonus is based on how well they've
+                performed through the game.<br />Example: If one player only got to answer 7 questions, while the others got 8, his final score will be divided by 7 and multiplied by 8.</span
+              >
             </p>
           </div>
           <button @click="start()" :disabled="Object.keys(json).length === 0 || $store.getters.getPlayers.length == 0" class="start-button">

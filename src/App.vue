@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!--    <div id="nav">
-      <router-link to="/">Play</router-link> |
-      <router-link to="/about">Create a Jeoprady</router-link>
-    </div> !-->
     <router-view />
   </div>
 </template>
@@ -14,6 +10,13 @@ body {
   background-color: #181c4d;
   height: 100%;
   background-image: url(~@/assets/carbon-fibre-v2.png);
+  animation: move 200s linear infinite;
+}
+
+@keyframes move {
+  100% {
+    background-position: 3000px 3000px;
+  }
 }
 html {
   height: 100%;
@@ -26,6 +29,8 @@ html {
   color: #eeeeee;
   height: 100%;
   overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
 }
 
 #nav {
@@ -59,5 +64,14 @@ html {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #4968cc;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+  transform: scale(0.5);
 }
 </style>

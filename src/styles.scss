@@ -1,6 +1,8 @@
 // COLORS
 $primary: #1f316b;
-$secomdary: #181c4d;
+$secondary: #181c4d;
+
+$jeoparody-yellow: #e9b91e;
 
 $interaction-green: #60bd56;
 $interaction-green-dark: #519e48;
@@ -44,4 +46,9 @@ $interaction-gray-dark: #737280;
   font-family: "NotoSansJP";
   src: url(~@/assets/fonts/NotoSansJP-Light.otf) format("truetype");
   font-weight: lighter;
+}
+
+@font-face {
+  font-family: "Korinna";
+  src: url(~@/assets/fonts/korinan.ttf) format("truetype");
 }

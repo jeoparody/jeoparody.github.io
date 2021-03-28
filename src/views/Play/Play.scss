@@ -8,6 +8,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 20px #00000033);
 
   .config {
     display: flex;
@@ -26,11 +27,26 @@
         .player {
           background-color: #3d58af;
           margin: 0;
-          font-size: 20px;
           text-align: left;
           height: 50px;
-          line-height: 50px;
-          padding: 0 14px;
+          padding: 0 10px;
+
+          input {
+            outline: none;
+            font-size: 20px;
+            height: 30px;
+            width: calc(100% - 55px);
+            padding: 0 5px;
+            border: 2px solid transparent;
+            margin: 8px 0;
+            background-color: transparent;
+            color: white;
+            transition: 0.2s;
+
+            &:hover {
+              border-bottom-color: white;
+            }
+          }
 
           &:nth-child(2n) {
             background-color: #4968cc;
@@ -38,6 +54,13 @@
 
           &:nth-child(1) {
             border-radius: 5px 5px 0 0;
+          }
+
+          &:hover {
+            button {
+              visibility: visible;
+              opacity: 1;
+            }
           }
 
           button {
@@ -48,6 +71,9 @@
             outline: none;
             cursor: pointer;
             margin: 15px 0;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s;
 
             img {
               height: 20px;
@@ -136,13 +162,36 @@
 
         p {
           font-size: 18px;
+          padding: 10px;
+          margin: 0 -10px;
+          border-radius: 10px;
+          transition: max-height 0.4s, background-color 0.1s, font-size 0.1s;
+          cursor: pointer;
+          max-height: 26px;
+          overflow-y: hidden;
+
+          .description {
+            display: none;
+            font-size: 16px;
+            font-weight: lighter;
+          }
+
+          &:hover {
+            background-color: #2e448b;
+            max-height: 200px;
+            font-size: 20px;
+
+            .description {
+              display: inline;
+            }
+          }
         }
         img {
           float: right;
           height: 20px;
           background-color: #4968cc;
           padding: 5px;
-          margin-top: -5px;
+          margin-top: -2.5px;
           border-radius: 5px;
           cursor: pointer;
         }
@@ -190,14 +239,15 @@ table {
   }
 
   td {
-    color: #e7d52c;
+    color: $jeoparody-yellow;
     font-size: 3vw;
+    text-shadow: 0.2vw 0.2vw 0 black;
     font-weight: bold;
     transition: 0.2s;
     cursor: pointer;
 
     &:hover {
-      border-color: #e7d52c;
+      border-color: $jeoparody-yellow;
     }
   }
   .completed {
@@ -212,14 +262,15 @@ table {
   display: flex;
   height: 11%;
   overflow: hidden;
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
+  justify-content: center;
 
   .player {
+    width: 12vw;
     color: #111111;
     margin: 10px 20px 0 20px;
     border-radius: 20px 20px 0 0;
-    flex: 1;
     background-color: #ced7e9;
     cursor: pointer;
     transition: 0.2s;
@@ -233,7 +284,8 @@ table {
     }
 
     h1 {
-      margin: 10px 0;
+      margin: 10px 0 5px 0;
+      font-size: 1.2vw;
     }
 
     input {
@@ -314,4 +366,8 @@ table {
 
 .disabled {
   opacity: 0.2;
+}
+
+.wip {
+  opacity: 0.3;
 }

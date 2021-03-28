@@ -1,6 +1,7 @@
 // import jsonData from "./data.json";
 import Modal from "@/components/Modal/Modal";
 import Results from "@/components/Results/Results.vue";
+import axios from "axios";
 
 export default {
   name: "Play",
@@ -115,6 +116,15 @@ export default {
     },
     finished() {
       return this.$store.getters.getGrid.every((row) => row.every((cell) => cell == true));
+    },
+    generateRandom() {
+      axios.get("http://jservice.io/api/clues?category=5&value=100").then((response) => console.log(response.data));
+    },
+    refreshCategories() {
+      // max offset: 18414, last for not useful
+      const random = Math.floor(Math.random() * (18400 - 0 + 1)) + 0;
+      console.log(random);
+      axios.get("http://jservice.io/api/categories?count=10&offset=18400").then((response) => console.log(response.data));
     },
   },
 };

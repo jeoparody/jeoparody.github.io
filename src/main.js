@@ -3,8 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import axios from "axios";
+import VueAxios from "vue-axios";
 
-Vue.use(Vuex);
+Vue.use(Vuex, VueAxios, axios);
 
 export const store = new Vuex.Store({
   state: {
@@ -62,6 +64,9 @@ export const store = new Vuex.Store({
       state.players = state.players.filter(function(item) {
         return item !== player;
       });
+    },
+    setPlayers(state, players) {
+      state.players = players;
     },
     nextPlayer(state) {
       state.players[state.currentPlayer].answers += 1;

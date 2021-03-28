@@ -112,7 +112,7 @@ export default {
         this.jeoparody.prizes = this.jeoparody.prizes.filter(function(item) {
           return item !== value;
         });
-        for (var j = 0; j < this.jeoparody.categories; j++) {
+        for (var j = 0; j < this.jeoparody.categories.length; j++) {
           this.jeoparody.categories[j].questions.splice(i, 1);
         }
         this.updateBoard();

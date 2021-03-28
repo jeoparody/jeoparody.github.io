@@ -233,7 +233,7 @@
     }
 
     td {
-      color: #e7d52c;
+      color: $jeoparody-yellow;
       font-weight: bold;
       transition: 0.2s;
       cursor: pointer;
@@ -250,7 +250,7 @@
         transition: 0.2s;
         margin: 0 10px;
         width: 80px;
-        color: #e7d52c;
+        color: $jeoparody-yellow;
         font-weight: bold;
         margin-right: -20px;
 
@@ -267,10 +267,10 @@
     }
 
     .active {
-      border-color: #e7d52c;
+      border-color: $jeoparody-yellow;
     }
 
-    .completed {
+    .filled {
       color: #34d64a;
 
       input {
