@@ -1,5 +1,19 @@
 # Patchnotes
 
+## Patch 21w13a
+
+**Introducing a whole new game: Trivia!**
+
+### Trivia
+
+Trivia is a singleplayer quiz game, where you can test your knowledge in a bunch of diferent categories by answering multiple choice questions. Your stats get tracked for you to see how well you're performing.
+
+**Trivia fits your interests**. You can declare your level of interest for each category, which will afffect how often question of said category show up.
+
+### Jeoparody
+
+You can now play jeoparody without the need of creating a board first! You can use randomly generated boards, where you only have to select some randomly suggested categories and the whole board will be generated for you! There's still the possibiity to create and play custom boards of course.
+
 ## Patch 21w12a
 
 ### Features

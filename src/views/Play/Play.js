@@ -26,6 +26,9 @@ export default {
       started: false,
       grid: [],
       options: {},
+      suggestedCategories: [],
+      selectedCategories: [],
+      questionsPerCategory: 5,
     };
   },
   mounted() {
@@ -35,6 +38,8 @@ export default {
     this.players = this.$store.getters.getPlayers;
     this.started = this.$store.getters.getGameState;
     this.grid = this.$store.getters.getGrid;
+
+    this.refreshCategories();
   },
   computed: {
     getGrid: function() {
@@ -117,14 +122,54 @@ export default {
     finished() {
       return this.$store.getters.getGrid.every((row) => row.every((cell) => cell == true));
     },
-    generateRandom() {
-      axios.get("http://jservice.io/api/clues?category=5&value=100").then((response) => console.log(response.data));
+    async generateJson() {
+      this.jeoparody = {
+        title: "Generated",
+        categories: [],
+        prizes: [],
+      };
+      if (this.questionsPerCategory < 1 || this.questionsPerCategory > 5) {
+        this.questionsPerCategory = 5;
+      }
+      this.selectedCategories.forEach(async (category, index) => {
+        await axios.get("http://jservice.io/api/clues?category=" + category.id).then((response) => this.$store.commit("setTempQuestions", response.data));
+        let temp = this.$store.getters.getTempQuestions;
+        temp.sort(function(a, b) {
+          return a.value - b.value;
+        });
+        this.$store.commit("setTempQuestions", temp);
+        console.log(this.$store.getters.getTempQuestions);
+        this.jeoparody.categories[index] = { name: this.$store.getters.getTempQuestions[0].category.title, questions: [] };
+
+        for (let i = 0; i < this.questionsPerCategory; i++) {
+          this.jeoparody.categories[index].questions[i] = { question: "", answer: "" };
+          this.jeoparody.categories[index].questions[i].question = this.$store.getters.getTempQuestions[i].question;
+          this.jeoparody.categories[index].questions[i].answer = this.$store.getters.getTempQuestions[i].answer;
+        }
+      });
+      for (let i = 0; i < this.questionsPerCategory; i++) {
+        this.jeoparody.prizes.push((i + 1) * 100);
+      }
+      this.$store.commit("setJeoparody", this.jeoparody);
+      this.json = this.jeoparody;
+      console.log(this.jeoparody);
     },
     refreshCategories() {
       // max offset: 18414, last for not useful
       const random = Math.floor(Math.random() * (18400 - 0 + 1)) + 0;
-      console.log(random);
-      axios.get("http://jservice.io/api/categories?count=10&offset=18400").then((response) => console.log(response.data));
+      axios.get("http://jservice.io/api/categories?count=10&offset=" + random).then((response) => (this.suggestedCategories = response.data));
+    },
+    async getQuestions(categoryId) {
+      await axios.get("http://jservice.io/api/clues?category=" + categoryId).then((response) => this.$store.commit("setTempQuestions", response.data));
+      console.log(this.$store.getters.getTempQuestions);
+    },
+    selectCategory(category) {
+      this.selectedCategories.push(category);
+      this.generateJson();
+    },
+    deselectCategory(index) {
+      this.selectedCategories.splice(index, 1);
+      this.generateJson();
     },
   },
 };

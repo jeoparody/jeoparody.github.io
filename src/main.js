@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     createJeoparody: {},
     activeCell: [0, 0],
     options: {
+      useCustomJeoparody: true,
       everybodyCanAnswer: false,
       turnEndsOnWrongAnswer: false,
       underdogAdjustment: true,
@@ -22,6 +23,40 @@ export const store = new Vuex.Store({
     players: [],
     started: false,
     grid: [],
+    // Trivia
+    tempQuestions: [],
+    stats: {
+      correctAnswers: 0,
+      incorrectAnswers: 0,
+      streak: 0,
+      longestStreak: 0,
+    },
+    triviaCategories: [
+      { name: "General Knowledge", id: 9, priority: 5 },
+      { name: "Entertainment: Books", id: 10, priority: 5 },
+      { name: "Entertainment: Film", id: 11, priority: 5 },
+      { name: "Entertainment: Music", id: 12, priority: 5 },
+      { name: "Entertainment: Musicals & Theatres", id: 13, priority: 5 },
+      { name: "Entertainment: Television", id: 14, priority: 5 },
+      { name: "Entertainment: Video Games", id: 15, priority: 5 },
+      { name: "Entertainment: Board Games", id: 16, priority: 5 },
+      { name: "Science & Nature", id: 17, priority: 5 },
+      { name: "Science: Computers", id: 18, priority: 5 },
+      { name: "Science: Mathematics", id: 19, priority: 5 },
+      { name: "Mythology", id: 20, priority: 5 },
+      { name: "Sports", id: 21, priority: 5 },
+      { name: "Geography", id: 22, priority: 5 },
+      { name: "History", id: 23, priority: 5 },
+      { name: "Politics", id: 24, priority: 5 },
+      { name: "Art", id: 25, priority: 5 },
+      { name: "Celebrities", id: 26, priority: 5 },
+      { name: "Animals", id: 27, priority: 5 },
+      { name: "Vehicles", id: 28, priority: 5 },
+      { name: "Entertainment: Comics", id: 29, priority: 5 },
+      { name: "Science: Gadgets", id: 30, priority: 5 },
+      { name: "Entertainment: Japanese Anime & Manga", id: 31, priority: 5 },
+      { name: "Entertainment: Cartoon & Animations", id: 32, priority: 5 },
+    ],
   },
   plugins: [createPersistedState()],
   mutations: {
@@ -36,6 +71,9 @@ export const store = new Vuex.Store({
     },
     setOptions(state, option) {
       switch (option) {
+        case "useCustomJeoparody":
+          state.options.useCustomJeoparody = !state.options.useCustomJeoparody;
+          break;
         case "everybodyCanAnswer":
           state.options.everybodyCanAnswer = !state.options.everybodyCanAnswer;
           break;
@@ -106,6 +144,15 @@ export const store = new Vuex.Store({
       }
       state.jeoparody = {};
     },
+    setTempQuestions(state, questions) {
+      state.tempQuestions = questions;
+    },
+    setTriviaStats(state, stats) {
+      state.stats = stats;
+    },
+    setTriviaCategories(state, categories) {
+      state.triviaCategories = categories;
+    },
   },
   actions: {},
   modules: {},
@@ -142,6 +189,15 @@ export const store = new Vuex.Store({
     },
     getGrid(state) {
       return state.grid;
+    },
+    getTempQuestions(state) {
+      return state.tempQuestions;
+    },
+    getTriviaStats(state) {
+      return state.stats;
+    },
+    getTriviaCategories(state) {
+      return state.triviaCategories;
     },
   },
 });

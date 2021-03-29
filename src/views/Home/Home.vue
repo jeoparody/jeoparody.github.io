@@ -4,10 +4,14 @@
       <div v-if="currentIndex === 0" key="1">
         <div class="home jeoparody">
           <h1>JEOPARODY!</h1>
-          <p>The quizshow for you and your friends!<br />(Might be inspired by the classic TV-quizshow "Jeopardy!")</p>
+          <p>The classic quizshow for you and your friends!</p>
           <div class="buttons">
             <router-link to="/play"><button class="play">Play</button></router-link>
             <router-link to="/create"><button>Create a Jeoparody</button></router-link>
+          </div>
+          <div class="meta">
+            <img src="@/assets/group.png" />
+            <span>2-8 Players</span>
           </div>
           <!-- <h2>Here's how it works</h2>
           <p>
@@ -21,18 +25,33 @@
           <p>You can always download your created Jeoparody and continue editing it later.</p>
           <p>Have fun!</p> !-->
         </div>
+        <div class="credit">Questions provided by <a class="link" href="http://jservice.io/" target="_blank">jService</a></div>
       </div>
       <div v-if="currentIndex === 1" key="2">
+        <div class="home t">
+          <h1>Trivia</h1>
+          <p>Test your knowledge!</p>
+          <div class="buttons">
+            <router-link to="/trivia"><button class="play">Play</button></router-link>
+          </div>
+          <div class="meta">
+            <img src="@/assets/group.png" />
+            <span>1 Player</span>
+          </div>
+        </div>
+        <div class="credit">Questions provided by <a class="link" href="https://opentdb.com/" target="_blank">Open Trivia Database</a></div>
+      </div>
+      <div v-if="currentIndex === 2" key="3">
         <div class="dev-tag">IN DEVELOPMENT</div>
         <div class="home wwc">
-          <h1>Wer wird Challenger?</h1>
+          <h1>Who wants to be Challenger?</h1>
           <div class="buttons">
             <router-link to="/play"><button class="play">Play</button></router-link>
             <router-link to="/create"><button>Create a Quiz</button></router-link>
           </div>
         </div>
       </div>
-      <div v-if="currentIndex === 2" key="3">
+      <div v-if="currentIndex === 3" key="4">
         <div class="home">
           <h1>More games coming soon!</h1>
           <p>Maybe...</p>

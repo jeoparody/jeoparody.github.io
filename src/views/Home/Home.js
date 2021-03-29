@@ -5,7 +5,7 @@ export default {
     return {
       currentIndex: 0,
       back: false,
-      colors: ["#181c4d", "#5f2323", "#598a73"],
+      colors: ["#181c4d", "#298040", "#5f2323", "#d6b522"],
     };
   },
   mounted() {
@@ -25,7 +25,7 @@ export default {
   methods: {
     next() {
       this.back = false;
-      if (this.currentIndex == 2) {
+      if (this.currentIndex == 3) {
         this.currentIndex = 0;
       } else {
         this.currentIndex++;
@@ -34,7 +34,7 @@ export default {
     prev() {
       this.back = true;
       if (this.currentIndex == 0) {
-        this.currentIndex = 2;
+        this.currentIndex = 3;
       } else {
         this.currentIndex--;
       }
@@ -45,10 +45,12 @@ export default {
     getNext() {
       switch (this.currentIndex) {
         case 0:
-          return "Wer wird Challenger?";
+          return "Trivia";
         case 1:
-          return "More";
+          return "Wer wird Challenger?";
         case 2:
+          return "More";
+        case 3:
           return "Jeoparody!";
       }
     },
@@ -59,6 +61,8 @@ export default {
         case 1:
           return "Jeoparody!";
         case 2:
+          return "Trivia";
+        case 3:
           return "Wer wird Challenger?";
       }
     },

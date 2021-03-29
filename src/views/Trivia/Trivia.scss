@@ -1,0 +1,313 @@
+.trivia {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #298040;
+  overflow-x: hidden;
+  background-image: url(~@/assets/carbon-fibre-v2.png);
+  animation: move 200s linear infinite;
+
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 60px;
+
+    .next {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+
+      height: 50px;
+      border: none;
+      color: white;
+      padding: 0 40px;
+      border-radius: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+      outline: none;
+
+      background-color: #797c80;
+      text-shadow: 0px 2px 0px #5a5c5f;
+      box-shadow: 0px 6px 0px 0px #5a5c5f, 0px 6px 10px #000000;
+
+      &:hover,
+      &:focus {
+        transform: translateX(-50%) scale(1.08);
+      }
+    }
+
+    .question {
+      text-shadow: 0px 0px 5px #000000;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .category {
+      text-shadow: 0px 0px 5px #000000;
+      margin-bottom: 0px;
+    }
+
+    .answer {
+      border: none;
+      color: white;
+      background-color: black;
+      box-shadow: 0px 0px 5px #000000;
+      text-shadow: 0px 2px 0px #000000;
+      cursor: pointer;
+      transition: 0.2s;
+      outline: none;
+
+      &:hover,
+      &:focus {
+        transform: scale(1.08);
+      }
+    }
+    .unanswered {
+      &:nth-child(3) {
+        background-color: #9c372a;
+        text-shadow: 0px 2px 0px #72281e;
+        box-shadow: 0px 6px 0px 0px #72281e, 0px 6px 10px #000000;
+      }
+      &:nth-child(4) {
+        background-color: #233ba7;
+        text-shadow: 0px 2px 0px #192b7c;
+        box-shadow: 0px 6px 0px 0px #192b7c, 0px 6px 10px #000000;
+      }
+      &:nth-child(5) {
+        background-color: #2a9c30;
+        text-shadow: 0px 2px 0px #207224;
+        box-shadow: 0px 6px 0px 0px #207224, 0px 6px 10px #000000;
+      }
+      &:nth-child(6) {
+        background-color: #b9ae0c;
+        text-shadow: 0px 2px 0px #99900d;
+        box-shadow: 0px 6px 0px 0px #99900d, 0px 6px 10px #000000;
+      }
+    }
+    .correct {
+      background-color: #13ca1c;
+      text-shadow: 0px 2px 0px #13a01a;
+      box-shadow: 0px 6px 0px 0px #13a01a, 0px 6px 10px #000000;
+    }
+    .incorrect {
+      background-color: #bd1616;
+      text-shadow: 0px 2px 0px #8a1111;
+      box-shadow: 0px 6px 0px 0px #8a1111, 0px 6px 10px #000000;
+    }
+    .neutral {
+      background-color: #797c80;
+      text-shadow: 0px 2px 0px #5a5c5f;
+      box-shadow: 0px 6px 0px 0px #5a5c5f, 0px 6px 10px #000000;
+    }
+  }
+}
+@keyframes move {
+  100% {
+    background-position: 3000px 3000px;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
+.category {
+  .category-name {
+    width: 60%;
+    text-align: left;
+  }
+
+  .value {
+    float: right;
+    width: 25px;
+    height: 25px;
+    font-size: 18px;
+    margin-top: 5px;
+    background: #4caf50;
+    line-height: 22px;
+    font-weight: bold;
+  }
+
+  .slider {
+    -webkit-appearance: none;
+    width: 40%;
+    height: 25px;
+    float: right;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    margin-top: 5px;
+  }
+
+  .slider:hover {
+    opacity: 1;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4caf50;
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4caf50;
+    cursor: pointer;
+  }
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .stat {
+    flex: 1;
+    min-width: 200px;
+    max-width: 200px;
+    height: 220px;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #4caf50;
+    box-shadow: 0px 0px 15px #357a38ad;
+
+    img,
+    .img-background {
+      height: 100px;
+      width: 100px;
+      margin: 10px auto 0 auto;
+      background-color: #defddf;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .img-background {
+      margin-bottom: 7px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .number {
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    .piechart {
+      height: 80px;
+      width: 80px;
+      padding: 10px;
+      border-radius: 50%;
+      // C83C50, ff6c6c   00AB5E, 00df76
+    }
+  }
+}
+
+.reset-stats {
+  background-color: #888b8f;
+  text-shadow: 0px 2px 0px #7b7e81;
+  box-shadow: 0px 6px 0px 0px #7b7e81, 0px 6px 10px #00000073;
+  height: 40px;
+  border: none;
+  color: white;
+  padding: 0 20px;
+  margin: 20px;
+  border-radius: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.08);
+  }
+}
+
+.confirm {
+  background-color: #bd1616;
+  text-shadow: 0px 2px 0px #8a1111;
+  box-shadow: 0px 6px 0px 0px #8a1111, 0px 6px 10px #00000073;
+}
+
+.menu {
+  opacity: 0.5;
+  height: 50px;
+  top: 20px;
+  right: 20px;
+  position: absolute;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    width: calc(100% - 40px);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    .question {
+      font-size: 24px;
+    }
+    .category {
+      font-size: 18px;
+    }
+    .answer {
+      height: 80px;
+      width: calc(50% - 20px);
+      border-radius: 20px;
+      font-size: 20px;
+      margin: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .container {
+    .question {
+      font-size: 40px;
+    }
+    .category {
+      font-size: 30px;
+    }
+    .answer {
+      height: 80px;
+      width: calc(50% - 40px);
+      border-radius: 20px;
+      font-size: 24px;
+      margin: 20px;
+    }
+  }
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4caf50;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #4caf50;
+}

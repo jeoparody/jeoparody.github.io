@@ -25,11 +25,13 @@
         </div>
         <div class="settings">
           <h2>Settings</h2>
-          <!-- <button @click="refreshCategories()">Generate</button> !-->
-          <label for="file" class="upload-file-label"
-            ><span v-if="Object.keys(json).length !== 0">"{{ json.title }}" uploaded</span><span v-if="Object.keys(json).length === 0">Upload your jeoparody file</span></label
-          >
-          <input class="upload-file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="previewFiles()" />
+          <div class="mode">
+            <button class="custom" v-bind:class="{ selected: $store.getters.getOptions.useCustomJeoparody }" @click="$store.commit('setOptions', 'useCustomJeoparody')">Use custom Jeoparody</button>
+            <button class="generated" v-bind:class="{ selected: !$store.getters.getOptions.useCustomJeoparody }" @click="$store.commit('setOptions', 'useCustomJeoparody')">
+              Use generated Jeoparody
+            </button>
+          </div>
+
           <div class="options">
             <p @click="$store.commit('setOptions', 'everybodyCanAnswer')" class="wip">
               Allow everybody to answer (W.I.P)<img v-if="$store.getters.getOptions.everybodyCanAnswer" src="@/assets/check.png" /><img v-else src="@/assets/wrong.png" />
@@ -53,6 +55,36 @@
                 performed through the game.<br />Example: If one player only got to answer 7 questions, while the others got 8, his final score will be divided by 7 and multiplied by 8.</span
               >
             </p>
+          </div>
+          <div v-if="!$store.getters.getOptions.useCustomJeoparody" class="customJeoparody">
+            <h2>Categories</h2>
+            <p>
+              Questions per category:<input
+                ref="questionsPerCategory"
+                type="number"
+                v-model.number="questionsPerCategory"
+                min="1"
+                max="5"
+                @keyup="generateJson()"
+                @click="$refs.questionsPerCategory.select()"
+              />
+            </p>
+            <h3>
+              Suggested categories <button @click="refreshCategories()" class="refresh"><img src="@/assets/refresh.png" /></button>
+            </h3>
+            <button class="category" v-for="category in suggestedCategories" :key="category.id" @click="selectCategory(category)">
+              {{ category.title }}<img src="@/assets/wrong.png" class="add" />
+            </button>
+            <h3>Selected categories</h3>
+            <button class="category" v-for="(category, index) in selectedCategories" :key="category.title" @click="deselectCategory(index)">
+              {{ category.title }}<img src="@/assets/wrong.png" />
+            </button>
+          </div>
+          <div v-if="$store.getters.getOptions.useCustomJeoparody">
+            <label for="file" class="upload-file-label"
+              ><span v-if="Object.keys(json).length !== 0">"{{ json.title }}" uploaded</span><span v-if="Object.keys(json).length === 0">Upload your jeoparody file</span></label
+            >
+            <input class="upload-file-picker" type="file" name="file" id="file" ref="fileInput" accept=".json" @change="previewFiles()" />
           </div>
           <button @click="start()" :disabled="Object.keys(json).length === 0 || $store.getters.getPlayers.length == 0" class="start-button">
             START

@@ -1,7 +1,7 @@
 .lobby {
   background-color: #1f316b;
   width: 50%;
-  height: 50%;
+  height: 70%;
   padding: 20px 40px 40px 40px;
   border-radius: 20px;
   position: absolute;
@@ -22,7 +22,7 @@
 
       .player-list {
         overflow-y: auto;
-        max-height: 446px;
+        max-height: 700px;
 
         .player {
           background-color: #3d58af;
@@ -124,9 +124,80 @@
       position: relative;
       flex: 2;
       margin-left: 40px;
+      text-align: left;
+
+      .mode {
+        width: 100%;
+        height: 40px;
+      }
+
+      .generated,
+      .custom {
+        width: 50%;
+        height: 40px;
+        border: 2px solid #4968cc;
+        background-color: transparent;
+        color: white;
+        font-size: 18px;
+        outline: none;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .custom {
+        float: left;
+        border-radius: 10px 0 0 10px;
+        border-right-width: 1px;
+      }
+      .generated {
+        float: right;
+        border-left-width: 1px;
+        border-radius: 0 10px 10px 0;
+      }
+
+      .selected {
+        background-color: #4968cc;
+      }
+
+      h3 {
+        margin: 20px 0 10px 0;
+        text-align: left;
+      }
+
+      .customJeoparody {
+        margin-top: 40px;
+
+        input {
+          width: 35px;
+          margin-left: 10px;
+          height: 30px;
+          border: none;
+          outline: none;
+          font-size: 18px;
+          padding: 0px 5px;
+          background-color: transparent;
+          border-bottom: 2px solid white;
+          color: white;
+        }
+      }
+
+      .refresh {
+        border: none;
+        float: right;
+        background-color: #4968cc;
+        height: 30px;
+        width: 30px;
+        border-radius: 5px;
+        outline: none;
+        padding: 5px;
+        cursor: pointer;
+
+        img {
+          height: 20px;
+        }
+      }
 
       h2 {
-        float: left;
+        text-align: left;
       }
 
       .upload-file-picker {
@@ -139,26 +210,53 @@
       }
       .upload-file-label {
         display: inline-block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 360px;
-        height: 40px;
-        line-height: 40px;
+        height: 50px;
+        line-height: 50px;
         border-radius: 10px;
         font-size: 18px;
-        margin: auto;
         background-color: #4968cc;
         border: none;
         color: white;
         cursor: pointer;
-        float: right;
-        margin-top: 13px;
+        text-align: center;
       }
 
       .file-label:hover {
       }
 
+      .category {
+        border: none;
+        background-color: #4968cc;
+        color: white;
+        line-height: 30px;
+        height: 30px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 10px 5px 0;
+        outline: none;
+        padding: 0 10px;
+
+        img {
+          margin-left: 10px;
+          height: 15px;
+          margin-top: 7.5px;
+          float: right;
+        }
+
+        .add {
+          transform: rotate(45deg);
+          height: 12px;
+          margin-top: 9px;
+        }
+      }
+
       .options {
         text-align: left;
-        margin-top: 80px;
+        margin: 20px 0;
 
         p {
           font-size: 18px;
