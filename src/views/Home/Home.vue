@@ -66,7 +66,7 @@
     </div>
 
     <div class="patch">
-      <span class="patch-number">Version 21w12a</span><a class="link" href="https://github.com/jeoparody/jeoparody.github.io/blob/development/patchnotes.md" target="_blank">Read Patchnotes</a>
+      <span class="patch-number">Version 21w13b</span><a class="link" href="https://github.com/jeoparody/jeoparody.github.io/blob/development/patchnotes.md" target="_blank">Read Patchnotes</a>
     </div>
   </div>
 </template>

@@ -1,5 +1,17 @@
 # Patchnotes
 
+## Patch 21w13b
+
+### Trivia
+
+- The current question now gets safed so that you cant just reload the page to avoid answering it
+
+### Jeoparody
+
+- Fixed API calls not working
+
+## Patch 21w12a
+
 ## Patch 21w13a
 
 **Introducing a whole new game: Trivia!**

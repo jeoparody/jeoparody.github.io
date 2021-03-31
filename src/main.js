@@ -57,6 +57,7 @@ export const store = new Vuex.Store({
       { name: "Entertainment: Japanese Anime & Manga", id: 31, priority: 5 },
       { name: "Entertainment: Cartoon & Animations", id: 32, priority: 5 },
     ],
+    triviaQuestion: {},
   },
   plugins: [createPersistedState()],
   mutations: {
@@ -153,6 +154,9 @@ export const store = new Vuex.Store({
     setTriviaCategories(state, categories) {
       state.triviaCategories = categories;
     },
+    setTriviaQuestion(state, question) {
+      state.triviaQuestion = question;
+    },
   },
   actions: {},
   modules: {},
@@ -198,6 +202,9 @@ export const store = new Vuex.Store({
     },
     getTriviaCategories(state) {
       return state.triviaCategories;
+    },
+    getTriviaQuestion(state) {
+      return state.triviaQuestion;
     },
   },
 });

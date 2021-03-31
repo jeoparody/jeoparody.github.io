@@ -16,12 +16,34 @@ export default {
       stats: {},
       categories: [],
       confirmReset: false,
+      token: "",
     };
   },
-  mounted() {
+  async mounted() {
+    await axios.get("https://opentdb.com/api_token.php?command=request").then((response) => (this.token = response.data.token));
     this.stats = this.$store.getters.getTriviaStats;
     this.categories = this.$store.getters.getTriviaCategories;
-    this.nextQuestion();
+    this.question = this.$store.getters.getTriviaQuestion;
+    if (!this.question.question) {
+      this.nextQuestion();
+    } else {
+      this.answers.push({ answer: this.question.correct_answer, correct: true, state: "unanswered" });
+      this.question.incorrect_answers.forEach((element) => {
+        this.answers.push({ answer: element, correct: false, state: "unanswered" });
+      });
+      for (var i = this.answers.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = this.answers[i];
+        this.answers[i] = this.answers[j];
+        this.answers[j] = temp;
+      }
+    }
+  },
+  async beforeUnmount() {
+    console.log("sdafasdgasdgasdgsadgdasg");
+    if (this.revealed) {
+      await this.nextQuestion();
+    }
   },
   methods: {
     submitAnswer(index) {
@@ -57,7 +79,7 @@ export default {
       this.revealed = false;
       this.question = {};
       this.answers = [];
-      await axios.get("https://opentdb.com/api.php?amount=1&category=" + this.getRandomCategory()).then((response) => (this.question = response.data.results[0]));
+      await axios.get("https://opentdb.com/api.php?amount=1&category=" + this.getRandomCategory() + "&token=" + this.token).then((response) => (this.question = response.data.results[0]));
       this.answers.push({ answer: this.question.correct_answer, correct: true, state: "unanswered" });
       this.question.incorrect_answers.forEach((element) => {
         this.answers.push({ answer: element, correct: false, state: "unanswered" });
@@ -68,7 +90,7 @@ export default {
         this.answers[i] = this.answers[j];
         this.answers[j] = temp;
       }
-      console.log(this.answers);
+      this.$store.commit("setTriviaQuestion", this.question);
     },
     getRandomCategory() {
       var categoriesArray = [];

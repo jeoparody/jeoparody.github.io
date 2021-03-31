@@ -132,7 +132,7 @@ export default {
         this.questionsPerCategory = 5;
       }
       this.selectedCategories.forEach(async (category, index) => {
-        await axios.get("http://jservice.io/api/clues?category=" + category.id).then((response) => this.$store.commit("setTempQuestions", response.data));
+        await axios.get("https://jservice.io/api/clues?category=" + category.id).then((response) => this.$store.commit("setTempQuestions", response.data));
         let temp = this.$store.getters.getTempQuestions;
         temp.sort(function(a, b) {
           return a.value - b.value;
@@ -157,10 +157,10 @@ export default {
     refreshCategories() {
       // max offset: 18414, last for not useful
       const random = Math.floor(Math.random() * (18400 - 0 + 1)) + 0;
-      axios.get("http://jservice.io/api/categories?count=10&offset=" + random).then((response) => (this.suggestedCategories = response.data));
+      axios.get("https://jservice.io/api/categories?count=10&offset=" + random).then((response) => (this.suggestedCategories = response.data));
     },
     async getQuestions(categoryId) {
-      await axios.get("http://jservice.io/api/clues?category=" + categoryId).then((response) => this.$store.commit("setTempQuestions", response.data));
+      await axios.get("https://jservice.io/api/clues?category=" + categoryId).then((response) => this.$store.commit("setTempQuestions", response.data));
       console.log(this.$store.getters.getTempQuestions);
     },
     selectCategory(category) {
